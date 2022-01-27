@@ -13,6 +13,6 @@ const Nav = () => (
     </nav>
     <Outlet />
   </div>
-)
+);
 
 export default Nav;

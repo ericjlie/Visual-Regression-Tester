@@ -18,7 +18,7 @@ module.exports = {
     })
     const referenceData = await backstop('reference', {
       config: {
-        "id": "API Test",
+        "id": req.body.testName,
         "viewports": settings.viewports,
         "scenarios": scenarios,
         "paths": {
@@ -44,6 +44,18 @@ module.exports = {
   },
   test: async (req, res, next) => {
     console.log(req.body);
+    const time = new Date();
+    console.log(time);
+    //I'm so sorry
+    const folderTime = (
+      time.getFullYear().toString() +
+      (time.getMonth() + 1).toString() + '0' +
+      time.getDate().toString() +
+      '-' +
+      time.getHours().toString() +
+      + time.getMinutes().toString() +
+      time.getSeconds().toString());
+    console.log(folderTime);
     const scenarios = req.body.urls.map(url => {
       return {
         "label": url.label,
@@ -58,7 +70,7 @@ module.exports = {
     try {
       const testData = await backstop('test', {
       config: {
-        "id": "API Test",
+        "id": req.body.testName,
         "viewports": settings.viewports,
         "scenarios": scenarios,
         "paths": {
@@ -72,15 +84,15 @@ module.exports = {
         "engineOptions": {
           "args": ["--no-sandbox"]
         },
-        "asyncCaptureLimit": 5,
+        "asyncCaptureLimit": 2,
         "asyncCompareLimit": 50,
         "debug": false,
         "debugWindow": false
       }
       })
-      res.status(201).send(testData);
+      res.status(201).send(folderTime);
     } catch (e) {
-      res.status(500).send(`Test Error`);
+      res.status(500).send(folderTime);
     }
   },
 }

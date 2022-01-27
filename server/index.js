@@ -14,9 +14,9 @@ app.listen(PORT, () => {
 
 app.use(express.static(__dirname + '/../client/dist'));
 
-// app.use('/backstop', express.static(__dirname + '/../backstop_data'));
-
 app.get('/urls', webcrawler.fetchPages);
 
 app.post('/reference', controller.reference);
 app.post('/test', controller.test);
+
+app.get('/*', express.static(__dirname + '/../client/dist/index.html'))
