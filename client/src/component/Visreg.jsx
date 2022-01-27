@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import axios from 'axios';
 import UrlForm from './visregChildren/UrlForm.jsx';
@@ -11,7 +11,7 @@ const Visreg = () => {
   const [reportTime, setReportTime] = useState(null);
   const [testSelect, setTestSelect] = useState(null);
   const [testTimeStamp, setTestTimeStamp] = useState(null);
-  const [report, setReport] = useState(null);
+  const [report, setReport] = useState({});
 
   const createReference = async () => {
     setServerState('Referencing');
@@ -32,6 +32,7 @@ const Visreg = () => {
   }
   const runTest = async () => {
     setServerState('Testing');
+    let tests = []
     Object.keys(urls).forEach( async (site) => {
       const domain = (new URL(site)).hostname.replace('www.', '');
       const bodyUrls = urls[site].map((subUrl, i) => {
@@ -41,15 +42,26 @@ const Visreg = () => {
         }
       })
       console.log(bodyUrls);
-      axios.post('/test', {
-        urls: bodyUrls,
-        testName: domain
-      }).then(()=>{
+      tests.push({urls: bodyUrls, testName: domain})
+    })
+    console.log(tests)
+    axios.post('/test', {
+        tests: tests
+      }).then((time)=>{
+        console.log(time.data)
+        setTestTimeStamp(time.data);
         setServerState('rest');
 
       })
-    });
+   ;
   }
+  useEffect(()=> {
+    Object.keys(urls).forEach( async (site) => {
+      const domain = (new URL(site)).hostname.replace('www.', '');
+      axios.get(`/visreg/${domain}/bitmaps_test/${testTimeStamp}/report.json`)
+      .then(testReport=>setReport({...report, [site]: testReport.data}))
+    })
+  }, [testTimeStamp])
   return (
     <div>
       <UrlForm
@@ -72,7 +84,7 @@ const Visreg = () => {
 
     )
      : <div></div>}
-    {testSelect ? <Test testSelect={testSelect}/> : <div></div>}
+    {testSelect ? <Test testSelect={testSelect} testTimeStamp={testTimeStamp}/> : <div></div>}
     </div>
   )
 
