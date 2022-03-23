@@ -8,7 +8,6 @@ module.exports = {
   },
   mode: 'development',
   module: {
-
     rules: [
       {
         test: /\.m?(js|jsx)$/,

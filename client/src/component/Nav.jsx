@@ -3,15 +3,15 @@ import { Link, Outlet } from 'react-router-dom';
 
 const Nav = () => (
   <div>
-    <nav>
-      <Link to={"/"}>
-        Home
-      </Link>
-      <Link to={"/visreg"}>
-        Run a Test
+  <div className="navbar">
+    <nav className="nav">
+      <Link to={"/"} >
+      <i className="home fa fa-home"></i>
       </Link>
     </nav>
-    <Outlet />
+
+  </div>
+  <Outlet />
   </div>
 );
 

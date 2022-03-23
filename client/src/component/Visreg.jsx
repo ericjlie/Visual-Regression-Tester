@@ -12,6 +12,7 @@ const Visreg = () => {
   const [testSelect, setTestSelect] = useState(null);
   const [testTimeStamp, setTestTimeStamp] = useState(null);
   const [report, setReport] = useState({});
+  const [selectReport, setSelectReport] = useState(null);
 
   const createReference = async () => {
     setServerState('Referencing');
@@ -63,28 +64,30 @@ const Visreg = () => {
     })
   }, [testTimeStamp])
   return (
-    <div>
-      <UrlForm
-      setUrls={setUrls}
-      urls={urls}
-      />
+    <div className="visreg scene-element">
+      <div className="urls">
       <UrlList
       setUrls={setUrls}
       urls={urls}
       setTestSelect={setTestSelect}
+      report={report}
+      setSelectReport={setSelectReport}
       />
+      </div>
+      <div className="test">
     {Object.keys(urls).length > 0 ? (
       serverState === 'rest' ?
       <div>
-        <button onClick={createReference}>Create New References</button>
-        <button onClick={runTest}>Run Test</button>
+        <button className="button" onClick={createReference}>Create New References</button>
+        <button className="button" onClick={runTest}>Run Test</button>
       </div>
       :
       <div>Server is {serverState}...</div>
 
     )
      : <div></div>}
-    {testSelect ? <Test testSelect={testSelect} testTimeStamp={testTimeStamp}/> : <div></div>}
+     </div>
+    {testSelect ? <Test testSelect={testSelect} testTimeStamp={testTimeStamp} selectReport={selectReport}/> : <div></div>}
     </div>
   )
 

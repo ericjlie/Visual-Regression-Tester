@@ -14,7 +14,6 @@ module.exports = {
             "misMatchThreshold" : 0.1,
             "requireSameDimensions": true
       }
-
     })
     const referenceData = await backstop('reference', {
       config: {
@@ -49,21 +48,28 @@ module.exports = {
 
     //I'm so sorry - terrible time parsing code below
     let hours;
+    let minutes;
     if(time.getHours().toString().length === 1){
       hours = '0' + time.getHours().toString();
     } else {
       hours = time.getHours().toString();
     }
+    if(time.getMinutes().toString().length === 1){
+      minutes = '0' + time.getMinutes().toString();
+    } else {
+      minutes = time.getMinutes().toString();
+    }
+    if(time.getSeconds().toString().length === 1){
+      seconds = '0' + time.getSeconds().toString();
+    } else {
+      seconds = time.getSeconds().toString();
+    }
     const folderTime = (
-      time.getFullYear().toString() +
-      '0' + (time.getMonth() + 1).toString() +
-      time.getDate().toString() +
-      '-' +
-      hours +
-      + time.getMinutes().toString() +
-      time.getSeconds().toString());
+      `${time.getFullYear().toString()}0${(time.getMonth() + 1).toString()}${time.getDate().toString()}-${hours}${minutes}${seconds}`
+    );
     console.log(folderTime);
     //END terrible time code parser
+
     const tests = await Promise.all(req.body.tests.map(async (test)=>{
       const scenarios = test.urls.map(url => {
         return {
@@ -73,7 +79,6 @@ module.exports = {
               "referenceUrl": "",
               "delay": 400,
               "misMatchThreshold" : 0.1,
-              "requireSameDimensions": true
         }
       })
       try {

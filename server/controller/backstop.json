@@ -23,14 +23,17 @@
       "readyEvent": "",
       "readySelector": "",
       "delay": 500,
-      "hideSelectors": [],
-      "removeSelectors": [],
-      "hoverSelector": "",
-      "clickSelector": "",
-      "postInteractionWait": 0,
-      "selectors": [],
-      "selectorExpansion": true,
-      "expect": 0,
+      "misMatchThreshold" : 0.1,
+      "requireSameDimensions": true
+    },
+    {
+      "label": "BackstopJS Homepage",
+      "cookiePath": "backstop_data/engine_scripts/cookies.json",
+      "url": "https://www.uniqlo.com/us/en/men/tops/sweaters",
+      "referenceUrl": "",
+      "readyEvent": "",
+      "readySelector": "",
+      "delay": 500,
       "misMatchThreshold" : 0.1,
       "requireSameDimensions": true
     }

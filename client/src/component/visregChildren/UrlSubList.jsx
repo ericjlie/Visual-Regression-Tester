@@ -1,22 +1,18 @@
 import React, { useState } from 'react';
+import UrlSubEntry from './UrlSubEntry.jsx'
 
-const UrlSubList = ({url, setUrls, setTestSelect}) => {
-  const domain = (new URL(url[0])).hostname.replace('www.', '')
-  const domainTrimmed = domain.replace('.', '')
-  const handleClickTest = (i) => {
-    setTestSelect({
-      index: i,
-      domain: domain,
-      domainTrimmed: domainTrimmed,
-      url: url[0]
-    })
-  }
+const UrlSubList = ({url, setUrls, setTestSelect, report, setSelectReport}) => {
+  const domain = (new URL(url[0])).hostname.replace('www.', '');
+  const domainTrimmed = domain.replace('.', '');
+  console.log(report)
   return (
     <div>
       <h2>{url[0]}</h2>
-      {url.map((sub, i) =><div onClick={() => handleClickTest(i)} key={i}>{sub}</div>)}
+      {url.map((sub, i) =><UrlSubEntry key={i} setSelectReport={setSelectReport} index={i} url={url} setTestSelect={setTestSelect} setUrls={setUrls} sub={sub} report={report ? report.tests[i] : null}/>)}
     </div>
   )
 };
 
 export default UrlSubList;
+
+//.tests[i].pair

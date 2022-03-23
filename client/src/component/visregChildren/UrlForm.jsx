@@ -28,14 +28,15 @@ const UrlForm = ({urls, setUrls}) => {
   }
   return (
 
-    <div>
+    <div className="urlForm">
       <form onSubmit={submitHandler}>
-        <label>Enter Website to Test:</label>
+        <label>Enter Website to Test:&nbsp;</label>
         <input type="url" ref={urlField} required></input>
         <br/>
-        <label>Include Website Subpages:</label>
+        <label>Include Website Subpages:&nbsp;</label>
         <input type="checkbox" ref={checkbox}/>
-        <button>Submit</button>
+        <br/>
+        <button className="button">Submit</button>
       </form>
       {searchStatus ? <div>Searching for urls...</div> : <div></div>}
     </div>

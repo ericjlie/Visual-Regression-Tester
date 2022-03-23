@@ -9,7 +9,7 @@ module.exports = {
   fetchPages: async (req, res, next) => {
     let urlArr = [req.query.url]
     const domainName = (new URL(req.query.url)).hostname.replace('www.', '')
-    const regex = new RegExp(escapeRegExp(domainName))
+    const regex = new RegExp(escapeRegExp(domainName));
     console.log(regex)
     const findUrls = async (url) => {
       const urlsInPage = [];
@@ -19,7 +19,6 @@ module.exports = {
         const $ = cheerio.load(pageRes.data);
         links = $('a');
         $(links).each((i, link) => {
-
           const href = $(link).attr('href');
           console.log(`checking ${href}`)
           if( regex.test(href) && !urlsInPage.includes(href) && !urlArr.includes(href)){
